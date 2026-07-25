@@ -1,0 +1,48 @@
+#!/bin/sh
+
+set -eu
+
+shell_name="${SHELL##*/}"
+
+case "$shell_name" in
+  zsh)
+    config_file="${ZDOTDIR:-$HOME}/.zshrc"
+    source_line='source "$(brew --prefix)/etc/vv/vv.sh"'
+    ;;
+  bash)
+    config_file="$HOME/.bashrc"
+    source_line='source "$(brew --prefix)/etc/vv/vv.sh"'
+    ;;
+  sh)
+    config_file="$HOME/.profile"
+    source_line='. "$(brew --prefix)/etc/vv/vv.sh"'
+    ;;
+  fish)
+    config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/fish"
+    config_file="$config_dir/config.fish"
+    source_line='source (brew --prefix)/etc/vv/vv.fish'
+    ;;
+  *)
+    printf 'vv-init: unsupported shell: %s\n' "$shell_name" >&2
+    printf 'Add this to your shell config manually:\n' >&2
+    printf '  source "$(brew --prefix)/etc/vv/vv.sh"\n' >&2
+    exit 1
+    ;;
+esac
+
+mkdir -p "$(dirname "$config_file")"
+touch "$config_file"
+
+if grep -F "$source_line" "$config_file" >/dev/null 2>&1; then
+  printf 'vv already configured in %s\n' "$config_file"
+  exit 0
+fi
+
+{
+  printf '\n# vv\n'
+  printf '%s\n' "$source_line"
+} >> "$config_file"
+
+printf 'Added vv to %s\n' "$config_file"
+printf 'Restart your shell or run:\n'
+printf '  %s\n' "$source_line"
