@@ -1,17 +1,20 @@
 ### vv
-
-  <!-- <p align="center">
-    <img src="assets/logo-dark.png" alt="vv usage example" width="300">
-  </p> -->
+<p align="center">
+  <img src="assets/logo-dark.png" width="180" alt="My Project logo">
+</p>
 
 ***
 
-`vv` is a simple scripted shell tool meant to be used for toggling virtual environments for `venv` and `uv` projects.
+`vv` is a simple shell utility tool meant to be used for toggling virtual environments for [`venv`](https://github.com/pypa/virtualenv) and [`uv`](https://github.com/astral-sh/uv) projects.
 
 it is a drop in replacement for `source .venv/bin/activate` and `deactivate`.
 
 
   ![vv usage example](assets/carbon.png)
+
+```zsh
+curl -fsSL https://raw.githubusercontent.com/zian-feng/vv/main/install.sh | sh
+```
 
 
 #### Usage
