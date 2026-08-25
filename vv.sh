@@ -1,3 +1,5 @@
+unalias vv 2>/dev/null || true
+
 vv() {
   if [ -n "${VIRTUAL_ENV:-}" ]; then
     deactivate
